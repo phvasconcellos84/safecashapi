@@ -1,11 +1,11 @@
 export interface UserModel {
-    id: Number;
-    name: String;
-    email: String;
-    cpf: String;
-    phone: String;
-    password: String;
-    typeUser: Number;
+    id: number;
+    name: string;
+    email: string;
+    cpf: string;
+    phone: string;
+    password: string;
+    typeUser: number;
     createdAt: Date;
     updatedAt: Date;
 }

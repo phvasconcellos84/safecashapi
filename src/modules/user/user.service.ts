@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-import { Request } from 'express';
 import { UserModel } from './user.model';
 import { userInsertDTO } from './dtos/userInsert.dto';
 
@@ -12,7 +11,17 @@ export const getUsers = async (): Promise<UserModel[]> => {
 };
 
 export const createUsers = async (body: userInsertDTO): Promise<UserModel> => {
-    return prisma.user.create({
+    return await prisma.user.create({
         data: body
     });
 };
+
+export const getUser = async (id: number): Promise<UserModel | null> => {
+    const user = await prisma.user.findUnique({
+        where: {
+            id
+        }
+    });
+
+    return user;
+}

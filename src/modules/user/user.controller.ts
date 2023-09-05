@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
-import { createUsers, getUsers } from './user.service';
+import { createUsers, getUser, getUsers } from './user.service';
 import { userInsertDTO } from './dtos/userInsert.dto';
+import { UserModel } from './user.model';
 
 export const userRouter = Router();
 
@@ -20,8 +21,10 @@ router.post('/', async (req: Request<undefined, undefined, userInsertDTO>, res: 
     res.status(201).json({ message: users });
 });
 
-router.get('/:id', (req: Request, res: Response): void => {
-    const id = req.params.id;
+router.get('/:id', async (req: Request, res: Response): Promise<void> => {
+    const id = parseInt(req.params.id);
 
-    res.status(200).json({ nome: 'Paulo Henrique de Vasconcellos' });
+    const user = await getUser(id);
+
+    res.status(200).json({ user });
 });

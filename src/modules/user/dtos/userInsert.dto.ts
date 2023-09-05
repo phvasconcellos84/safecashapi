@@ -1,8 +1,8 @@
 export interface userInsertDTO {
-    name: String;
-    email: String;
-    cpf: String;
-    phone: String;
-    password: String;
-    typeUser: Number;
+    name: string;
+    email: string;
+    cpf: string;
+    phone: string;
+    password: string;
+    typeUser: number;
 }
