@@ -1,11 +1,8 @@
-export interface UserModel {
-    id: Number;
+export interface userInsertDTO {
     name: String;
     email: String;
     cpf: String;
     phone: String;
     password: String;
     typeUser: Number;
-    createdAt: Date;
-    updatedAt: Date;
 }
