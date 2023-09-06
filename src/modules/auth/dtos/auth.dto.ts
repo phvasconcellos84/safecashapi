@@ -3,7 +3,7 @@ export interface AuthDTO {
     password: string;
 }
 
-export interface AuthPayloadDTO {
+export interface AuthUserDTO {
     id: number;
     email: string;
     typeUser: number;
