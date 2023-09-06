@@ -1,10 +1,10 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response, Express } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
 import routes from '../routes/index';
 import bodyParser from 'body-parser';
 
-export default () => {
+export default (): Express => {
     const app = express();
 
     app.use(express.json());
@@ -21,7 +21,7 @@ export default () => {
     routes(app);
 
     // Tratamento de erros
-    app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    app.use((err: Error, req: Request, res: Response) => {
         if (err instanceof Error)
             return res.status(400).json({
                 error: err.message

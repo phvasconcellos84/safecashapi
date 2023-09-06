@@ -1,9 +1,8 @@
 import { Router, Request, Response } from 'express';
-import { createUsers, getUser, getUsers } from './user.service';
+import { createUsers, getUserByID, getUsers } from './user.service';
 import { userInsertDTO } from './dtos/userInsert.dto';
-import { UserModel } from './user.model';
 
-export const userRouter = Router();
+const userRouter = Router();
 
 const router = Router();
 
@@ -15,16 +14,30 @@ router.get('/', async (_, res: Response): Promise<void> => {
     res.status(200).json({ users });
 });
 
-router.post('/', async (req: Request<undefined, undefined, userInsertDTO>, res: Response): Promise<void> => {
-    const users = await createUsers(req.body);
+router.post(
+    '/',
+    async (req: Request<undefined, undefined, userInsertDTO>, res: Response): Promise<Response> => {
+        const user = await createUsers(req.body);
 
-    res.status(201).json({ message: users });
-});
+        if (user === null)
+            return res
+                .status(200)
+                .json({ message: 'Usuário já está cadastrado no banco de dados' });
 
-router.get('/:id', async (req: Request, res: Response): Promise<void> => {
+        return res.status(201).json({ message: user });
+    }
+);
+
+router.get('/:id', async (req: Request, res: Response): Promise<Response> => {
     const id = parseInt(req.params.id);
 
-    const user = await getUser(id);
+    const user = await getUserByID(id);
 
-    res.status(200).json({ user });
+    if (user === null) {
+        return res.status(204).send();
+    } else {
+        return res.status(200).json({ user });
+    }
 });
+
+export default userRouter;
